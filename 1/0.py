@@ -7,6 +7,7 @@
 
 import pandas as pd
 import numpy as np
+from scipy.stats import norm
 
 df = pd.read_excel('university data.xlsx')
 
@@ -49,11 +50,14 @@ correlationMat = subset.corr()
 # TODO figure out seaborn to plot this stuff
 
 cleaned = subset.dropna()  # getting rid of nasty NaN at the end (avg)
-logLikelihood = sum(np.log(cleaned).as_matrix())  # TODO confirm calculation
+density_function = norm.pdf(cleaned[columns], means, sigmas)
+# print(density_function)
 
-print("Means ", means)
-print("Variances ", variances)
-print("Standard Deviations ", sigmas)
-print("Covariance ", covarianceMat)
-print("Correlation ", correlationMat)
-print("Log-likelihood ", logLikelihood)
+logLikelihood = sum(np.log(density_function))  # TODO confirm calculation
+print(logLikelihood)
+# print("Means ", means)
+# print("Variances ", variances)
+# print("Standard Deviations ", sigmas)
+# print("Covariance ", covarianceMat)
+# print("Correlation ", correlationMat)
+# print("Log-likelihood ", logLikelihood)
