@@ -8,6 +8,16 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import norm
+from math import exp, pi, sqrt
+from numpy.linalg import det, pinv
+
+
+def calc_pdf(row, mean, cov):
+    coeff = (1 / (pow((2 * pi), 2) * sqrt(det(cov))))
+    power = (-0.5) * np.matmul(np.transpose((row - mean)), pinv(cov), (row - mean))
+    pdf = coeff * np.exp(power)
+    return pdf
+
 
 df = pd.read_excel('university data.xlsx')
 
@@ -41,7 +51,7 @@ sigma4 = df['Tuition(out-state)$'].std()
 # Calculating Covariance matrix
 subset = df[columns]
 covarianceMat = subset.cov()
-# correlationMat = subset.cov().as_matrix if needed as a numpy matrix
+# covarianceMat = subset.cov().as_matrix if needed as a numpy matrix
 
 # Calculating Correlation matrix
 correlationMat = subset.corr()
@@ -50,11 +60,14 @@ correlationMat = subset.corr()
 # TODO figure out seaborn to plot this stuff
 
 cleaned = subset.dropna()  # getting rid of nasty NaN at the end (avg)
-density_function = norm.pdf(cleaned[columns], means, sigmas)
-# print(density_function)
 
-logLikelihood = sum(np.log(density_function))  # TODO confirm calculation
-print(logLikelihood)
+rows = np.asarray(list(cleaned.itertuples()))
+print(rows)
+
+# pdf = [rows[i][1:5] for i in range(len(rows))]
+pdf = [calc_pdf(rows[i][1:5], np.asarray(means),
+                np.asarray(covarianceMat)) for i in range(len(rows))]
+# print(np.array(means))
 # print("Means ", means)
 # print("Variances ", variances)
 # print("Standard Deviations ", sigmas)
