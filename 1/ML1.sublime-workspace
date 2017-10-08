@@ -1,0 +1,317 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"log",
+				"logLikelihood\tstatement"
+			],
+			[
+				"cov",
+				"covarianceMat\tstatement"
+			],
+			[
+				"cal",
+				"calc_pdf\tfunction"
+			],
+			[
+				"dev",
+				"Deviations"
+			],
+			[
+				"sigma",
+				"sigmas\tstatement"
+			],
+			[
+				"var",
+				"variances\tstatement"
+			],
+			[
+				"corr",
+				"correlationMat\tstatement"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/varunshijo/homework/CVIP/1/release/code/batchToVisualWords.m",
+			"settings":
+			{
+				"buffer_size": 1576,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "split = mat2cell(dist,[size(dist,1)*(2^-2),size(dist,1)*(2^-2),size(dist,1)*(2^-2),size(dist,1)*(2^-2)],[size(dist,2)*2^-2,size(dist,2)*2^-2,size(dist,2)*2^-2,size(dist,2)*2^-2])",
+			"settings":
+			{
+				"buffer_size": 178,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"synt",
+				"Set Syntax: MATLAB"
+			],
+			[
+				"indent",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 428.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/varunshijo/homework/ML/1"
+	],
+	"file_history":
+	[
+		"/Users/varunshijo/homework/ML/1/ML1.sublime-project",
+		"/Users/varunshijo/homework/ML/1/0.py",
+		"/Users/varunshijo/homework/CVIP/1/release/code/RGB2Lab.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/guessImage.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/getVisualWords.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/getImageFeaturesSPM.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/getImageFeatures.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/getFilterBankAndDictionary.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/extractFilterResponses.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/evaluateRecognitionSystem.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/distanceToSet.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/createFilterBank.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/computeDictionary.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/buildRecognitionSystem.m",
+		"/Users/varunshijo/homework/CVIP/1/release/code/batchToVisualWords.m",
+		"/Users/varunshijo/Library/Mobile Documents/com~apple~CloudDocs/CVIP1.sublime-project",
+		"/Users/varunshijo/Downloads/0.py",
+		"/Users/varunshijo/Downloads/warpA.m",
+		"/Users/varunshijo/Downloads/alignChannels.m",
+		"/Users/varunshijo/Downloads/script1.m",
+		"/Users/varunshijo/Downloads/ncc.m",
+		"/Users/varunshijo/homework/ML/0.py",
+		"/Users/varunshijo/Downloads/normxcorr2.m",
+		"/Users/varunshijo/homework/OS/0/main.c",
+		"/Users/varunshijo/homework/CSE574/0/ham.py"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/varunshijo/homework/CVIP/1/release/code/batchToVisualWords.m",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Objective-C/Objective-C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 178,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								178
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/varunshijo/homework/ML/1",
+							"syntax": "Packages/Matlab/Matlab.sublime-syntax"
+						},
+						"translation.x": 460.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "ML1.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Library/Mobile Documents/com~apple~CloudDocs/ML1.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 135.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

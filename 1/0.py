@@ -7,7 +7,22 @@
 
 import pandas as pd
 import numpy as np
+import seaborn as sb
 from scipy.stats import norm
+from math import exp, pi, sqrt
+from numpy.linalg import det, pinv
+from scipy.stats import multivariate_normal as mn
+import matplotlib.pyplot as plt
+
+
+sb.set(color_codes=True)
+
+def calc_pdf(row, mean, cov):
+    coeff = (1 / (pow((2 * pi), 2) * sqrt(det(cov))))
+    power = (-0.5) * np.matmul(np.transpose((row - mean)), pinv(cov), (row - mean))
+    pdf = coeff * np.exp(power)
+    return pdf
+
 
 df = pd.read_excel('university data.xlsx')
 
@@ -25,7 +40,7 @@ mu4 = df['Tuition(out-state)$'].mean()
 
 # Computing variance for named columns
 variances = df[columns].var()
-
+print(variances)
 var1 = df['CS Score (USNews)'].var()
 var2 = df['Research Overhead %'].var()
 var3 = df['Admin Base Pay$'].var()
@@ -41,7 +56,9 @@ sigma4 = df['Tuition(out-state)$'].std()
 # Calculating Covariance matrix
 subset = df[columns]
 covarianceMat = subset.cov()
-# correlationMat = subset.cov().as_matrix if needed as a numpy matrix
+
+# print(covarianceMat)
+# covarianceMat = subset.cov().as_matrix if needed as a numpy matrix
 
 # Calculating Correlation matrix
 correlationMat = subset.corr()
@@ -50,11 +67,23 @@ correlationMat = subset.corr()
 # TODO figure out seaborn to plot this stuff
 
 cleaned = subset.dropna()  # getting rid of nasty NaN at the end (avg)
-density_function = norm.pdf(cleaned[columns], means, sigmas)
-# print(density_function)
 
-logLikelihood = sum(np.log(density_function))  # TODO confirm calculation
-print(logLikelihood)
+rows = np.asarray(list(cleaned.itertuples()))
+# print(rows)
+
+# pdf = [rows[i][1:5] for i in range(len(rows))]
+pdf = [calc_pdf(rows[i][1:5], np.asarray(means),
+                np.asarray(covarianceMat)) for i in range(len(rows))]
+
+# pdf2 = [mn.pdf(rows[i][1:5], np.asarray(means),
+#                 np.asarray(covarianceMat)) for i in range(len(rows))]
+
+logs = np.log(pdf)
+logLikelihood = [sum(logs[i]) for i in range(len(logs))]
+print(sum(logLikelihood))
+plt.plot(logLikelihood)
+plt.show()
+# print(np.array(means))
 # print("Means ", means)
 # print("Variances ", variances)
 # print("Standard Deviations ", sigmas)
