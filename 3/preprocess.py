@@ -1,37 +1,72 @@
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import load_model, Sequential
-from keras import backend as K
-from keras.layers import Flatten
-from scipy.misc import imresize
-from glob import glob
 import numpy as np
-from PIL import Image
 import imageio
-from math import floor
+from glob import glob
+from scipy.misc import imresize
+from sklearn.datasets import fetch_mldata
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.utils import check_random_state
+from keras.utils import to_categorical
 
-slp = load_model("slp.h5")
+train_samples = 60000
+test_samples = 10000
+batch_size = 128
+num_classes = 10
+epochs = 20
+epochs_cnn = 12
+img_rows = 28
+img_cols = 28
 
-#read images and resize them 
+enc = OneHotEncoder()
+mnist = fetch_mldata('MNIST original')
+X = mnist.data.astype('float64')
+y = mnist.target
+random_state = check_random_state(0)
+permutation = random_state.permutation(X.shape[0])
+X = X[permutation]
+y = y[permutation]
+X = X.reshape((X.shape[0], -1))
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, train_size=train_samples, test_size=test_samples)
+
+# print("\nLabels\n")
+# print(type(y_test))
+# print("\nBefore scale \n")
+# print(X_test)
+# print(type(X_test))
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# print("\nAfter scale\n")
+# print(X_test)
+# print(type(X_test))
+
+# Turn up tolerance for faster convergence
+clf = LogisticRegression(C=50. / train_samples,
+                         multi_class='multinomial',
+                         penalty='l1', solver='saga', tol=0.01)
+clf.fit(X_train, y_train)
+sparsity = np.mean(clf.coef_ == 0) * 100
+score = clf.score(X_test, y_test)
+
+# print('Best C % .4f' % clf.C_)
+# print("Sparsity with L1 penalty: %.2f%%" % sparsity)
+# print("Test score with L1 penalty: %.4f" % score)
 img_list = glob("proj3_images/Numerals/*/*.png")
-labels = [path.split('/')[2] for path in img_list]
-
-# labels = [i for i in range(10)]
-# labels
+labels = [int(path.split('/')[2]) for path in img_list]
 
 img_list = [imageio.imread(img) for img in img_list]
 gray = [img[:, :, 0] for img in img_list]
-resized = [1-(imresize(img, (28, 28)).flatten(order='C') / 255) for img in gray ]
+
+resized = [
+    1 - (imresize(
+        img, (img_rows,
+              img_cols)).flatten(order='C') / 255) for img in gray]
 
 resized = np.array(resized)
 
-predictions = []
-
-for i in resized:
-    predictions.append(np.argmax(slp.predict(np.reshape(i,(1,784)))))
-
-pairs = zip(predictions,labels)
-
-hits = [pair[0]==int(pair[1]) for pair in pairs]
-# print(hits)
-accuracy = len(np.nonzero(hits)[0])/len(hits)
-print(accuracy)
+logistic_score = clf.score(resized, labels)
+print(logistic_score)
