@@ -157,4 +157,3 @@ except:
     model.save("cnn.h5")
 
 # now gotta preprocess usps
-
