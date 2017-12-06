@@ -1,8 +1,7 @@
 import pandas as pd
 from glob import glob
-from os import makedirs, mkdir, fsync
+from os import makedirs, mkdir
 from shutil import copy2
-from keras.utils import to_categorical
 from keras.models import Sequential, load_model
 from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
@@ -27,7 +26,7 @@ else:
 
 ################ LABELS #################
 try:
-    load_model('../data/celeba.h5')
+    model = load_model('../data/celeba.h5')
 except:
     original = open('../data/list_attr_celeba.txt', 'r')
     cleaned = open('../data/cleaned.txt', 'w')
@@ -38,43 +37,32 @@ except:
     converted[0] = header_new
     stripped = [line.replace('  ', ' ') for line in converted]
     [cleaned.write(line) for line in stripped]
-    original.flush()
-    cleaned.flush()
-    fsync(original.fileno())
-    fsync(cleaned.fileno())
     original.close()
     cleaned.close()
 
-    makedirs('../data/test/0', mode=0o777)
-    mkdir('../data/test/1', mode=0o777)
-    makedirs('../data/training/0', mode=0o777)
-    mkdir('../data/training/1', mode=0o777)
-    makedirs('../data/validation/0', mode=0o777)
-    mkdir('../data/validation/1', mode=0o777)
+    makedirs('../data/test/0')
+    mkdir('../data/test/1')
+    makedirs('../data/training/0')
+    mkdir('../data/training/1')
+    makedirs('../data/validation/0')
+    mkdir('../data/validation/1')
 
     df = pd.read_table('../data/cleaned.txt', delimiter=' ')
-    print(df.head())
 
-    labels = df['Eyeglasses'].astype(int)
+    labels = df['Eyeglasses']
 
     label_count = len(labels)
 
     unit = int(label_count / 10)
-    train_count = unit * 8
-    validation_count = unit * 9
-
-    train_labels = labels[0:train_count]
-    validation_labels = labels[train_count + 1:validation_count]
-    test_labels = labels[validation_count + 1:]
 
     img_list = sorted(glob('../data/img_align_celeba/*'))
 
-    img_count = len(img_list)
-
-    unit = int(img_count / 10)
-
     train_bound = 8 * unit
     validation_bound = 9 * unit
+
+    train_labels = labels[0:train_bound]
+    validation_labels = labels[train_bound + 1:validation_bound]
+    test_labels = labels[validation_bound + 1:]
 
     train_img_names = img_list[0:train_bound]
     validation_img_names = img_list[train_bound + 1:validation_bound]
@@ -86,14 +74,11 @@ except:
 
     for counter in range(len(validation_img_names)):
         copy2(validation_img_names[counter], '../data/validation/' +
-              str(validation_labels[counter + train_count + 1]))
+              str(validation_labels[counter + train_bound + 1]))
 
     for counter in range(len(test_img_names)):
         copy2(test_img_names[counter], '../data/test/' +
-              str(test_labels[counter + validation_count + 1]))
-
-
-    # sorted till here
+              str(test_labels[counter + validation_bound + 1]))
 
     ################ NETWORK #################
 
@@ -125,12 +110,12 @@ except:
 
     train_datagen = ImageDataGenerator(
         rescale=1. / 255,
-        # shear_range=0.2,
-        # zoom_range=0.2,
-        # horizontal_flip=True)
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
     )
 
-    test_datagen = ImageDataGenerator(rescale=1./255)
+    validation_datagen = ImageDataGenerator(rescale=1. / 255)
 
     train_generator = train_datagen.flow_from_directory(
         train_image_dir,
@@ -139,7 +124,7 @@ except:
         class_mode='binary')
 
     # this is a similar generator, for validation data
-    validation_generator = test_datagen.flow_from_directory(
+    validation_generator = validation_datagen.flow_from_directory(
         validation_image_dir,
         target_size=(width, height),
         batch_size=batch_size,
@@ -147,9 +132,23 @@ except:
 
     model.fit_generator(
         train_generator,
-        steps_per_epoch=2000 // batch_size,
+        steps_per_epoch=2000 // batch_size,  # change this
         epochs=50,
         validation_data=validation_generator,
-        validation_steps=800 // batch_size)
+        validation_steps=800 // batch_size)  # change this
 
-    model.save('celeba.h5')
+    model.save('../data/celeba.h5')
+
+test_datagen = ImageDataGenerator(rescale=1. / 255)
+
+test_generator = test_datagen.flow_from_directory(
+    test_image_dir,
+    target_size=(width, height),
+    batch_size=batch_size,
+    class_mode='binary')
+
+score = model.evaluate_generator(
+    test_generator,
+    15000 / batch_size)
+
+print(score)
