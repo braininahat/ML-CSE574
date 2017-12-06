@@ -132,10 +132,10 @@ except:
 
     model.fit_generator(
         train_generator,
-        steps_per_epoch=2000 // batch_size,  # change this
+        steps_per_epoch=train_bound // batch_size,  # change this
         epochs=50,
         validation_data=validation_generator,
-        validation_steps=800 // batch_size)  # change this
+        validation_steps=unit // batch_size)  # change this
 
     model.save('../data/celeba.h5')
 
