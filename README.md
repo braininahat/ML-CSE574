@@ -1,6 +1,8 @@
 # ML-CSE574
 Repo for course assignments of the Machine Learning course at the University at Buffalo under Dr. Sargur Srihari
 
+*Python3, SciKit-learn, Pandas, NumPy, SciPy, Keras+TensorFlow and a tiny bit of Bash* 
+
 The folders correspond to the following projects:
 
 1. Statistics for a small dataset: Mean, Variance, Log-Likelihood etc.
